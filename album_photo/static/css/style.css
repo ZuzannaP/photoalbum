@@ -9,70 +9,82 @@
 }
 
 .navbar-dark .navbar-nav .nav-link, .navbar-dark .navbar-brand {
-    color: #e4473d;
+    color: #ffffff;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-brand:hover {
-    color: #ffffff;
+    color:  #383838;
 }
 
 #navbarDropdown{
     margin-left: 50px;
 }
 
-#navbarNavAltMarkup > ul > div > div > a:nth-child(1):active, #navbarNavAltMarkup > ul > div > div > a:nth-child(2):active{
-    background-color: darkgrey ;
+#navbarNavAltMarkup > ul > div > div > a:nth-child(1):active, #navbarNavAltMarkup > ul > div > div > a:nth-child(2):active,
+#navbarNavAltMarkup > ul > div > div > a:nth-child(1):hover, #navbarNavAltMarkup > ul > div > div > a:nth-child(2):hover{
+    background-color: darkgrey;
 }
 
 .nav-item {
     text-align: right;
 }
 
+/* Menu */
 a.nav-item.nav-link{
     margin-right: 15px;
-
 }
 
 .nav_button{
-    background-color: #4b8b1f;
-    color: #ffffff;
+    background-color: #535353 !important;
+    color: #ffffff !important;
     margin: 4px;
 }
 
-#shall_we_meet_logo{
-    color: #e4473d;
+.nav_button:hover, .nav_button:active {
+    background-color: #3b3b3b !important;
+}
+
+#photoalbum_logo{
+    color: #383838;
     font-weight: 900;
     font-size: x-large;
 }
 
 /* NAV RIGHT */
+#right-navbar{
+    padding-right: 20px;
+}
+
 #sidebar-wrapper > div > li, body > div > div.list-group.list-group-flush > li{
-    background-color: #4b8b1f;
-    color: #fffcff;
+    background-color: darkgrey;
+    color: white;
 }
 
 
 #sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > a{
-  background-color:  #E2E8F7;
+    background-color:  lightgrey;
     color: #4F4350;
 }
+
+
 /*BODY*/
 
 h1 {
-    color: slategrey;
+    color: #5d5d5d;
     font-size: x-large;
     padding: 10px 0 40px 0;
     margin: 0;
+    font-weight: bold;
 }
 
 h2 {
-    color: black;
+    color: dimgray;
     font-size: large;
 }
 
 body{
     background: #fffcff;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'Merriweather', serif;
     color: black;
 }
 
@@ -82,14 +94,13 @@ body{
 }
 
 .myButton{
-    background-color: slategrey;
-    color: darkgrey;
+    background-color: dimgrey;
+    color: white;
 }
 
-#youSure{
-    color: darkgrey;
-    font-size: large;
-    font-weight: 700;
+.myButton:hover{
+    background-color: #383838;
+    color: white;
 }
 
 

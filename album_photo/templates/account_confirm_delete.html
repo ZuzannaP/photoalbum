@@ -1,33 +1,17 @@
-{% extends "base.html" %}
+{% extends "account_settings_tmp.html" %}
 {% load crispy_forms_tags %}
 
-{% block content %}
 
-
-    <div class="d-flex">
-
-
-        <div class="container-fluid col-md-6">
-            <h1>Delete account</h1></br></br>
-            <p id="youSure">{{ request.user.username }}, are you sure? This is irreversible!</p></br></br>
+{% block myform %}
+        <div class="container-fluid col-md-7">
+            <h1>Delete account</h1></br>
+            <p>{{ request.user.username }}, are you sure? </br>This is irreversible!</p></br></br>
             <form action="" method="post">
                 {% csrf_token %}
-                <p>I am double checkin again. Are you sure? (click "No!")</p>
+                <p>I am double checkin again.</p>
                 {{ form | crispy }}
-                <a href="{% url 'homepage' %}" class="btn btn-info myButton ">No</a>
-                <input type="submit" value="Yes" class="btn btn-info myButton"/> </input>
+                <a href="{% url 'homepage' %}" class="btn btn-info myButton ">No, I don't wanna delete</a>
+                <input type="submit" value="Yes, I wanna delete" class="btn btn-info myButton"/> </input>
             </form>
         </div>
-
-
-        <div class="list-group list-group-flush container-fluid col-md-6">
-               <li class="list-group-item  ">Navigation</li>
-            <a href="{% url 'homepage' %}"
-               class="list-group-item list-group-item-dark list-group-item-action ">Homepage</a>
-            <a href="{% url 'edit_personal_info' %}"
-               class="list-group-item list-group-item-dark list-group-item-action ">Edit you account</a>
-        </div>
-
-    </div>
 {% endblock %}
-

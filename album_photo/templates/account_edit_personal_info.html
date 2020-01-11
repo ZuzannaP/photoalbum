@@ -1,0 +1,14 @@
+{% extends "account_settings_tmp.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block myform %}
+        <div class="container-fluid col-md-7">
+            <h1>Fill in / update your personal information</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-info myButton">Submit</button>
+            </form>
+        </div>
+{% endblock %}

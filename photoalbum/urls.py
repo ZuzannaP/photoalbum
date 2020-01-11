@@ -17,7 +17,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from album_photo.views import homepage, AddPhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView, \
-    EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, CustomPasswordChangeDoneView
+    EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
+    account_settings
 from photoalbum.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path('create_account/', SignUpView.as_view(), name='signup'),
+    path('account_settings/', account_settings, name="account_settings"),
     path('edit_account/', EditPersonalInfoView.as_view(), name="edit_personal_info"),
     path('delete_account/', DeleteAccountView.as_view(), name="delete_account"),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),

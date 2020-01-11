@@ -56,11 +56,15 @@ class SignUpView(SuccessMessageMixin, CreateView,):
     template_name = 'signup.html'
 
 
+def account_settings(request):
+    return render(request, "account_settings_tmp.html")
+
+
 class EditPersonalInfoView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = CustomUserChangeForm
     success_url = reverse_lazy('homepage')
     success_message = "Your personal data has been succesfully changed!"
-    template_name = 'edit_personal_info.html'
+    template_name = 'account_edit_personal_info.html'
 
     def get_object(self):
         return self.request.user
