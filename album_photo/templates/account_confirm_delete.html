@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 <p>I am double checkin again.</p>
                 {{ form | crispy }}
-                <a href="{% url 'homepage' %}" class="btn btn-info myButton ">No, I don't wanna delete</a>
+                <a href="{% url 'view_photos' %}" class="btn btn-info myButton ">No, I don't wanna delete</a>
                 <input type="submit" value="Yes, I wanna delete" class="btn btn-info myButton"/> </input>
             </form>
         </div>

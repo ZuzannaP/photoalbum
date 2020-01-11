@@ -5,23 +5,83 @@
 {% block content %}
 
 
+    {% if not request.user.is_authenticated %}
+        <div class="container col-md-6">
+            </br></br><h1><i><b>Photo album</b></i> is an Instagram copy. </h1>
+            <p>Wanna use Insta, but are ashamed of the low amount of followers? Use Photo album! Here you can easly have
+                the most followers of all! </br>
+        </div>
+    {% else %}
 
-<div class="container-fluid col-md-8">
-    <h1>View photos</h1>
-    {% for photo in photos %}
-    <ul>
-        <p><img src="{{ photo.path.url }}" width="300"></p>
-        <p>{{ photo.owner.username }}</p>
-        <p>Upload date: {{ photo.creation_date }}</p>
-        <p>Likes: {{photo.likes.count}}</p>
-        <p>{% if user in photo.likes.all %}
-            You like this photo
-            <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
-            {% else %}
-            <a href="{% url 'like' pk=photo.id %}">Like it</a>
-            {% endif %}</p>
-    </ul>
-    {% endfor %}
-</div>
 
+        {#        to jest stara wersja#}
+
+        {#        <div class="container-fluid col-md-8">#}
+        {#            <h1>View photos</h1>#}
+        {#            {% for photo in photos %}#}
+        {#                <ul>#}
+        {#                    <p><img src="{{ photo.path.url }}" width="300"></p>#}
+        {#                    <p>{{ photo.owner.username }}</p>#}
+        {#                    <p>Upload date: {{ photo.creation_date }}</p>#}
+        {#                    <p>Description: {{ photo.description }}</p>#}
+        {#                    <p>Likes: {{ photo.likes.count }}</p>#}
+        {#                    <p>Comments: {{ photo.photo_comments.count }}</p>#}
+        {#                    <p>{% if user in photo.likes.all %}#}
+        {#                        You like this photo#}
+        {#                        <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>#}
+        {#                    {% else %}#}
+        {#                        <a href="{% url 'like' pk=photo.id %}">Like it</a>#}
+        {#                    {% endif %}</p>#}
+        {#                </ul>#}
+        {#            {% empty %}#}
+        {#                No photos so far.#}
+        {#            {% endfor %}#}
+
+        <div class="container-fluid col-md-12">
+        <h1>View photos</h1>
+            <div class="row">
+                {% for photo in photos %}
+                        <ul class="col">
+                            <p><img src="{{ photo.path.url }}" height="250"></p>
+                            <p>{{ photo.owner.username }}</p>
+                            <p>Upload date: {{ photo.creation_date }}</p>
+                            <p>Description: {{ photo.description }}</p>
+                            <p>Likes: {{ photo.likes.count }}</p>
+                            <p>Comments: {{ photo.photo_comments.count }}</p>
+                            <p>{% if user in photo.likes.all %}
+                                You like this photo
+                                <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
+                            {% else %}
+                                <a href="{% url 'like' pk=photo.id %}">Like it</a>
+                            {% endif %}</p>
+                        </ul>
+
+                        {% if forloop.counter|divisibleby:3 %}
+
+                            </div><!-- close existing row and open another one-->
+                            <div class="row">
+                        {% endif %}
+                        {% empty %}
+                        No photos so far
+                {% endfor %}
+            </div>
+        </div>
+
+
+        {% if is_paginated %}
+            <nav aria-label="Page navigation conatiner">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a>
+                        </li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
+
+    {% endif %}
 {% endblock %}

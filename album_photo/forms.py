@@ -1,11 +1,13 @@
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 
-from .models import Photo
+from .models import Photo, Comment
 from django import forms
+
 
 class AddPhotoForm(forms.Form):
     path = forms.ImageField()
+    description = forms.CharField(widget=forms.Textarea, max_length=500)
 
 
 class LoginForm(forms.Form):
@@ -20,4 +22,13 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+
+
+class CommentCreationForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["content"]
+
+
+
 

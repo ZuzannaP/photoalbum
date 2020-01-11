@@ -4,23 +4,36 @@
 
 {% block content %}
 
+    <div class="container-fluid col-md-12">
+        <h1>My photos</h1>
+        <div class="row">
+            {% for photo in photos %}
+                <ul class="col">
+                    <p><img src="{{ photo.path.url }}" height="250"></p>
+                    <p>Upload date: {{ photo.creation_date }}</p>
+                    <p>Description: {{ photo.description }}</p>
+                    <p>Likes: {{ photo.likes.count }}</p>
+                    <p>Comments: {{ photo.photo_comments.count }}</p>
+                    <p>{% if user in photo.likes.all %}
+                        You like this photo
+                        <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
+                    {% else %}
+                        <a href="{% url 'like' pk=photo.id %}">Like it</a>
+                    {% endif %}</p>
+                </ul>
+                {% if forloop.counter|divisibleby:3 %}
+
+                    </div><!-- close existing row and open another one-->
+                    <div class="row">
+                {% endif %}
+            {% empty %}
+                No photos so far
+            {% endfor %}
+            </div>
+    </div>
 
 
-<div class="container-fluid col-md-8">
-    <h1>My photos</h1>
-    {% for photo in photos %}
-    <ul>
-        <p><img src="{{ photo.path.url }}" width="300"></p>
-        <p>Upload date: {{ photo.creation_date }}</p>
-        <p>Likes: {{photo.likes.count}}</p>
-        <p>{% if user in photo.likes.all %}
-            You like this photo
-            <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
-            {% else %}
-            <a href="{% url 'like' pk=photo.id %}">Like it</a>
-            {% endif %}</p>
-    </ul>
-    {% endfor %}
-</div>
+
+
 
 {% endblock %}

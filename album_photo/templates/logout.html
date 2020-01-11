@@ -13,7 +13,7 @@
                 {% csrf_token %}
                    Do you want to log out?
                 <input type="submit" value="Yes" class="btn btn-info myButton"/>
-                <button onclick="location.href='{% url "homepage" %}'" type="button" class="btn btn-info myButton">No</button>
+                <button onclick="location.href='{% url "view_photos" %}'" type="button" class="btn btn-info myButton">No</button>
             </form>
     {%  endif %}
     </div>
