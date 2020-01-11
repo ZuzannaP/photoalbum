@@ -9,11 +9,9 @@
         <div class="row">
             {% for photo in photos %}
                 <ul class="col">
-                    <p><img src="{{ photo.path.url }}" height="250"></p>
-                    <p>Upload date: {{ photo.creation_date }}</p>
-                    <p>Description: {{ photo.description }}</p>
+                    <a href="{% url 'one_photo' photo.pk %}" ><img src="{{ photo.path.url }}" height="250"></a></p>
                     <p>Likes: {{ photo.likes.count }}</p>
-                    <p>Comments: {{ photo.photo_comments.count }}</p>
+                    <p>Comments: {{ photo.comment_set.count }}</p>
                     <p>{% if user in photo.likes.all %}
                         You like this photo
                         <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>

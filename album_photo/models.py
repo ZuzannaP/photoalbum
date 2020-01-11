@@ -14,7 +14,9 @@ class Photo(models.Model):
 class Comment(models.Model):
     content = models.CharField(max_length=500)
     creation_date = models.DateTimeField(auto_now_add=True)
-    photo = models.ManyToManyField(Photo, related_name="photo_comments")
-    author = models.ManyToManyField(User, related_name="author_comments")
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return f"{self.content}"

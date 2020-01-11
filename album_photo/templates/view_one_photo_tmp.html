@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Photo {% endblock %}
+
+{% block content %}
+
+        <div class="container-fluid col-md-6">
+<h1>Details about the photo</h1>
+        <p><img src="{{ photo.path.url }}" height="500"></p>
+        <p>Author: {{ photo.owner.username }}</p>
+        <p>Upload date: {{ photo.creation_date }}</p>
+        <p>Description: {{ photo.description }}</p>
+        <p>Likes: {{ photo.likes.count }}</p>
+        <p>{% if user in photo.likes.all %}
+            You like this photo
+            <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
+            {% else %}
+            <a href="{% url 'like' pk=photo.id %}">Like it</a>
+            {% endif %} </p>
+            <p><b>COMMENTS</b> ({{ photo.comment_set.count }}): {% for comment in photo.comment_set.all %}
+                <p>{{ comment.creation_date }}  <b>{{ comment.author }}</b>: {{ comment }}</p>
+            {% endfor %}
+            </p>
+
+
+
+</div>
+
+{% endblock %}

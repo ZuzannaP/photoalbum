@@ -138,6 +138,15 @@ class MyPhotos(LoginRequiredMixin, View):
         return render(request, "my_photos_tmp.html", ctx)
 
 
+class OnePhoto(LoginRequiredMixin, View):
+
+    def get(self, request, photo_id):
+        photo = Photo.objects.get(pk=photo_id)
+        ctx = {"photo": photo}
+        return render(request, "view_one_photo_tmp.html", ctx)
+
+
+
 class AddComment(LoginRequiredMixin, View):
 
     def get(self, request, photo_id):
@@ -150,9 +159,7 @@ class AddComment(LoginRequiredMixin, View):
         photo = Photo.objects.get(pk=photo_id)
         if form.is_valid():
             content = form.cleaned_data["content"]
-            comment = Comment.objects.create(content=content)
-            comment.photo.add(photo)
-            comment.author.add(request.user)
+            comment = Comment.objects.create(content=content, photo=photo, author=request.user)
             messages.success(request, 'Your comment has been saved!')
             return redirect("view_photos")
         ctx = {"form": form}
