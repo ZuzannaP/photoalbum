@@ -45,7 +45,7 @@ a.nav-item.nav-link{
     font-size: x-large;
 }
 
-/* NAV LEFT */
+/* NAV RIGHT */
 #sidebar-wrapper > div > li, body > div > div.list-group.list-group-flush > li{
     background-color: #4b8b1f;
     color: #fffcff;

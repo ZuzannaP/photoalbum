@@ -16,13 +16,19 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from album_photo.views import homepage, AddPhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView
+from album_photo.views import homepage, AddPhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView, \
+    EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, CustomPasswordChangeDoneView
 from photoalbum.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
+    path('create_account/', SignUpView.as_view(), name='signup'),
+    path('edit_account/', EditPersonalInfoView.as_view(), name="edit_personal_info"),
+    path('delete_account/', DeleteAccountView.as_view(), name="delete_account"),
+    path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
+    path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
     path("photo/add", AddPhoto.as_view(), name="add_photo"),
     path('photo/like/<int:pk>', LikePhoto.as_view(), name='like'),
     path('photo/unlike/<int:pk>', UnlikePhoto.as_view(), name='unlike'),
