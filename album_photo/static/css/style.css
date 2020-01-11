@@ -1,0 +1,95 @@
+/*NAVBAR TOP*/
+
+.navbar{
+    background-color: darkgrey !important;
+    border-radius: 0;
+    font-size: larger;
+    border: 0;
+    margin-bottom: 30px;
+}
+
+.navbar-dark .navbar-nav .nav-link, .navbar-dark .navbar-brand {
+    color: #e4473d;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-brand:hover {
+    color: #ffffff;
+}
+
+#navbarDropdown{
+    margin-left: 50px;
+}
+
+#navbarNavAltMarkup > ul > div > div > a:nth-child(1):active, #navbarNavAltMarkup > ul > div > div > a:nth-child(2):active{
+    background-color: darkgrey ;
+}
+
+.nav-item {
+    text-align: right;
+}
+
+a.nav-item.nav-link{
+    margin-right: 15px;
+
+}
+
+.nav_button{
+    background-color: #4b8b1f;
+    color: #ffffff;
+    margin: 4px;
+}
+
+#shall_we_meet_logo{
+    color: #e4473d;
+    font-weight: 900;
+    font-size: x-large;
+}
+
+/* NAV LEFT */
+#sidebar-wrapper > div > li, body > div > div.list-group.list-group-flush > li{
+    background-color: #4b8b1f;
+    color: #fffcff;
+}
+
+
+#sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > a{
+  background-color:  #E2E8F7;
+    color: #4F4350;
+}
+/*BODY*/
+
+h1 {
+    color: slategrey;
+    font-size: x-large;
+    padding: 10px 0 40px 0;
+    margin: 0;
+}
+
+h2 {
+    color: black;
+    font-size: large;
+}
+
+body{
+    background: #fffcff;
+    font-family: 'Nunito Sans', sans-serif;
+    color: black;
+}
+
+.container-fluid{
+    padding: 0 40px 0 40px;
+    text-align: center;
+}
+
+.myButton{
+    background-color: slategrey;
+    color: darkgrey;
+}
+
+#youSure{
+    color: darkgrey;
+    font-size: large;
+    font-weight: 700;
+}
+
+

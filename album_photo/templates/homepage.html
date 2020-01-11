@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if not request.user.is_authenticated %}
+    <div class="container col-md-6">
+        </br></br><h1> <i><b>Photo album</b></i> this is an instagram copy. </h1>
+        <p>Wanna use Insta, but are ashamed of the low amount of followers? Use Photo album! Here you can easly have the most followers of all! </br>
+    </div>
+    {% else %}
+
+
+
+    <!-- Page Content -->
+      <div class="container-fluid col-md-10">
+        <h1 >Lalala</h1>
+        <p> to jest page content</p>
+      </div>
+ </div>
+
+    {% endif %}
+
+{% endblock %}
