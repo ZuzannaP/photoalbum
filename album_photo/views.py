@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView
 from django.views.generic.base import View
 
-from album_photo.forms import AddPhotoForm, EditPhotoForm, DeletePhotoForm, LoginForm, CustomUserChangeForm, CommentCreationForm
+from album_photo.forms import AddPhotoForm, EditPhotoForm,  LoginForm, CustomUserChangeForm, CommentCreationForm
 from album_photo.models import Photo, Comment
 
 
@@ -133,27 +133,39 @@ class EditPhoto(LoginRequiredMixin, SuccessMessageMixin, View):
         return render(request, "edit_photo_tmp.html", ctx)
 
 
-class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, View):
-    def get(self, request, photo_id):
-        photo = Photo.objects.get(pk=photo_id)
-        if photo.owner != request.user:
-            raise PermissionDenied
-        else:
-            form = DeletePhotoForm()
-            ctx = {"form": form, "photo": photo}
-            return render(request, "edit_photo_tmp.html", ctx)
+# class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, View):
+#     def get(self, request, photo_id):
+#         photo = Photo.objects.get(pk=photo_id)
+#         if photo.owner != request.user:
+#             raise PermissionDenied
+#         else:
+#             form = DeletePhotoForm()
+#             ctx = {"form": form, "photo": photo}
+#             return render(request, "edit_photo_tmp.html", ctx)
+#
+#     def post(self, request, photo_id):
+#         form = EditPhotoForm(request.POST)
+#         photo = Photo.objects.get(pk=photo_id)
+#         if form.is_valid():
+#             new_description = form.cleaned_data["description"]
+#             photo.description = new_description
+#             photo.save()
+#             messages.success(request, 'Photo successfully uploaded')
+#             return redirect(f"/photo/{photo_id}")
+#         ctx = {"form": form}
+#         return render(request, "edit_photo_tmp.html", ctx)
 
-    def post(self, request, photo_id):
-        form = EditPhotoForm(request.POST)
-        photo = Photo.objects.get(pk=photo_id)
-        if form.is_valid():
-            new_description = form.cleaned_data["description"]
-            photo.description = new_description
-            photo.save()
-            messages.success(request, 'Photo successfully uploaded')
-            return redirect(f"/photo/{photo_id}")
-        ctx = {"form": form}
-        return render(request, "edit_photo_tmp.html", ctx)
+class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Photo
+    template_name = "delete_photo_tmp.html"
+    success_url = '/photos/my_photos'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.owner != self.request.user:
+            raise PermissionDenied
+        return render(request, "delete_photo_tmp.html")
+
 
 class LikePhoto(LoginRequiredMixin, View):
     def get(self, request, pk):

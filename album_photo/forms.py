@@ -41,6 +41,4 @@ class EditPhotoForm(forms.ModelForm):
             "description": ("New description:"),
         }
 
-class DeletePhotoForm(forms.ModelForm):
-    pass
 
