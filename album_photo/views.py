@@ -5,12 +5,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, UpdateView, DeleteView
 from django.views.generic.base import View
 
-from album_photo.forms import AddPhotoForm, LoginForm, CustomUserChangeForm, CommentCreationForm
+from album_photo.forms import AddPhotoForm, EditPhotoForm, DeletePhotoForm, LoginForm, CustomUserChangeForm, CommentCreationForm
 from album_photo.models import Photo, Comment
 
 
@@ -108,18 +110,63 @@ class AddPhoto(LoginRequiredMixin, View):
         return render(request, "add_photo_tmp.html", ctx)
 
 
+class EditPhoto(LoginRequiredMixin, SuccessMessageMixin, View):
+    def get(self, request, photo_id):
+        photo = Photo.objects.get(pk=photo_id)
+        if photo.owner != request.user:
+            raise PermissionDenied
+        else:
+            form = EditPhotoForm()
+            ctx = {"form": form, "photo": photo}
+            return render(request, "edit_photo_tmp.html", ctx)
+
+    def post(self, request, photo_id):
+        form = EditPhotoForm(request.POST)
+        photo = Photo.objects.get(pk=photo_id)
+        if form.is_valid():
+            new_description = form.cleaned_data["description"]
+            photo.description = new_description
+            photo.save()
+            messages.success(request, 'Photo successfully uploaded')
+            return redirect(f"/photo/{photo_id}")
+        ctx = {"form": form}
+        return render(request, "edit_photo_tmp.html", ctx)
+
+
+class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, View):
+    def get(self, request, photo_id):
+        photo = Photo.objects.get(pk=photo_id)
+        if photo.owner != request.user:
+            raise PermissionDenied
+        else:
+            form = DeletePhotoForm()
+            ctx = {"form": form, "photo": photo}
+            return render(request, "edit_photo_tmp.html", ctx)
+
+    def post(self, request, photo_id):
+        form = EditPhotoForm(request.POST)
+        photo = Photo.objects.get(pk=photo_id)
+        if form.is_valid():
+            new_description = form.cleaned_data["description"]
+            photo.description = new_description
+            photo.save()
+            messages.success(request, 'Photo successfully uploaded')
+            return redirect(f"/photo/{photo_id}")
+        ctx = {"form": form}
+        return render(request, "edit_photo_tmp.html", ctx)
+
 class LikePhoto(LoginRequiredMixin, View):
     def get(self, request, pk):
         photo = Photo.objects.get(pk=pk)
         photo.likes.add(request.user)
-        return redirect('view_photos')
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
 
 class UnlikePhoto(LoginRequiredMixin, View):
     def get(self, request, pk):
         photo = Photo.objects.get(pk=pk)
         photo.likes.remove(request.user)
-        return redirect('view_photos')
+        return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
 
 class ViewPhotos(ListView):
@@ -138,21 +185,14 @@ class MyPhotos(LoginRequiredMixin, View):
         return render(request, "my_photos_tmp.html", ctx)
 
 
+# this view displays photo details and a form to add comments
 class OnePhoto(LoginRequiredMixin, View):
 
     def get(self, request, photo_id):
-        photo = Photo.objects.get(pk=photo_id)
-        ctx = {"photo": photo}
-        return render(request, "view_one_photo_tmp.html", ctx)
-
-
-
-class AddComment(LoginRequiredMixin, View):
-
-    def get(self, request, photo_id):
         form = CommentCreationForm()
-        ctx = {"form": form}
-        return render(request, "add_comment_tmp.html", ctx)
+        photo = Photo.objects.get(pk=photo_id)
+        ctx = {"photo": photo, "form": form}
+        return render(request, "view_one_photo_tmp.html", ctx)
 
     def post(self, request, photo_id):
         form = CommentCreationForm(request.POST)
@@ -161,10 +201,9 @@ class AddComment(LoginRequiredMixin, View):
             content = form.cleaned_data["content"]
             comment = Comment.objects.create(content=content, photo=photo, author=request.user)
             messages.success(request, 'Your comment has been saved!')
-            return redirect("view_photos")
+            return redirect(f'/photo/{photo_id}/')
         ctx = {"form": form}
-        return render(request, "add_photo_tmp.html", ctx)
-
+        return render(request, "view_photos_tmp.html", ctx)
 
 
 

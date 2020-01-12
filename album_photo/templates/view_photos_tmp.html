@@ -14,55 +14,34 @@
     {% else %}
 
 
-        {#        to jest stara wersja#}
-
-        {#        <div class="container-fluid col-md-8">#}
-        {#            <h1>View photos</h1>#}
-        {#            {% for photo in photos %}#}
-        {#                <ul>#}
-        {#                    <p><img src="{{ photo.path.url }}" width="300"></p>#}
-        {#                    <p>{{ photo.owner.username }}</p>#}
-        {#                    <p>Upload date: {{ photo.creation_date }}</p>#}
-        {#                    <p>Description: {{ photo.description }}</p>#}
-        {#                    <p>Likes: {{ photo.likes.count }}</p>#}
-        {#                    <p>Comments: {{ photo.photo_comments.count }}</p>#}
-        {#                    <p>{% if user in photo.likes.all %}#}
-        {#                        You like this photo#}
-        {#                        <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>#}
-        {#                    {% else %}#}
-        {#                        <a href="{% url 'like' pk=photo.id %}">Like it</a>#}
-        {#                    {% endif %}</p>#}
-        {#                </ul>#}
-        {#            {% empty %}#}
-        {#                No photos so far.#}
-        {#            {% endfor %}#}
-
         <div class="container-fluid col-md-12">
-        <h1>View photos</h1>
+            <h1>View photos</h1>
             <div class="row">
                 {% for photo in photos %}
-                        <ul class="col">
-                            <a href="{% url 'one_photo' photo.pk %}" ><img src="{{ photo.path.url }}" height="250"></a></p>
-                            <p>{{ photo.owner.username }}</p>
-                            <p>Likes: {{ photo.likes.count }}</p>
-                            <p>Comments: {{ photo.comment_set.count }}</p>
-                            <p>{% if user in photo.likes.all %}
-                                You like this photo
+                    <ul class="col">
+                        <a href="{% url 'one_photo' photo.pk %}"><img src="{{ photo.path.url }}" height="250"></a></p>
+                        <p>by {{ photo.owner.username }}</p>
+                        <p>Likes: ({{ photo.likes.count }})
+                            {% if user in photo.likes.all %}
                                 <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
                             {% else %}
                                 <a href="{% url 'like' pk=photo.id %}">Like it</a>
-                            {% endif %}</p>
-                        </ul>
-
-                        {% if forloop.counter|divisibleby:3 %}
-
-                            </div><!-- close existing row and open another one-->
-                            <div class="row">
+                            {% endif %}
+                        </p>
+                        {% if photo.comment_set.count == 0 %}
+                            <p>Comments: ({{ photo.comment_set.count }})</p>
+                        {% else %}
+                            <a href="{% url 'one_photo' photo.pk %}">Comments: ({{ photo.comment_set.count }})</a>
                         {% endif %}
-                        {% empty %}
-                        No photos so far
+                    </ul>
+                    {% if forloop.counter|divisibleby:3 %}
+                        </div><!-- closing one div, opening a new one-->
+                        <div class="row">
+                    {% endif %}
+                {% empty %}
+                    No photos so far
                 {% endfor %}
-            </div>
+                </div>
         </div>
 
 

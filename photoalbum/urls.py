@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from album_photo.views import AddPhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView, \
+from album_photo.views import AddPhoto, EditPhoto, DeletePhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView, \
     EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
-    account_settings, AddComment, OnePhoto
+    account_settings, OnePhoto
 from photoalbum.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
@@ -32,10 +32,11 @@ urlpatterns = [
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
     path("photo/add", AddPhoto.as_view(), name="add_photo"),
+    path("photo/edit/<int:photo_id>/", EditPhoto.as_view(), name="edit_photo"),
+    path("photo/delete/<int:photo_id>/", DeletePhoto.as_view(), name="delete_photo"),
     path('photo/like/<int:pk>', LikePhoto.as_view(), name='like'),
     path('photo/unlike/<int:pk>', UnlikePhoto.as_view(), name='unlike'),
     path("", ViewPhotos.as_view(), name="view_photos"),
     path("photos/my_photos", MyPhotos.as_view(), name="my_photos"),
     path("photo/<int:photo_id>/", OnePhoto.as_view(), name="one_photo"),
-    path("comment/<int:photo_id>/", AddComment.as_view(), name="add_comment")
 ]+ static(MEDIA_URL, document_root=MEDIA_ROOT)

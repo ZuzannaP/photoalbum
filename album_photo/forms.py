@@ -28,7 +28,19 @@ class CommentCreationForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["content"]
+        labels = {
+            "content": ("Add comment:"),
+        }
 
 
+class EditPhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ["description"]
+        labels = {
+            "description": ("New description:"),
+        }
 
+class DeletePhotoForm(forms.ModelForm):
+    pass
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %} Photo {% endblock %}
 
@@ -10,17 +11,30 @@
         <p>Author: {{ photo.owner.username }}</p>
         <p>Upload date: {{ photo.creation_date }}</p>
         <p>Description: {{ photo.description }}</p>
-        <p>Likes: {{ photo.likes.count }}</p>
+        {% if request.user == photo.owner %}
+            <a href="{% url "edit_photo" photo.pk %}">Edit description</a>
+        {% endif %}
+        <p>Likes: ({{ photo.likes.count }})</p>
         <p>{% if user in photo.likes.all %}
-            You like this photo
             <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
             {% else %}
             <a href="{% url 'like' pk=photo.id %}">Like it</a>
             {% endif %} </p>
             <p><b>COMMENTS</b> ({{ photo.comment_set.count }}): {% for comment in photo.comment_set.all %}
                 <p>{{ comment.creation_date }}  <b>{{ comment.author }}</b>: {{ comment }}</p>
+            {% empty %} </br>
+                No comments. You can be first!
             {% endfor %}
             </p>
+
+
+<div class="container-fluid col-md-8">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <input type="submit" class="btn btn-dark addButton" value="Send">
+    </form>
+</div>
 
 
 
