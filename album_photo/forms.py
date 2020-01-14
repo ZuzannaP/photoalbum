@@ -6,8 +6,8 @@ from django import forms
 
 
 class AddPhotoForm(forms.Form):
-    path = forms.ImageField()
-    description = forms.CharField(widget=forms.Textarea, max_length=500)
+    path = forms.ImageField(label="")
+    description = forms.CharField(widget=forms.Textarea, max_length=500, label="Photo description:")
 
 
 class LoginForm(forms.Form):

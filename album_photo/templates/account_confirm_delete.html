@@ -3,15 +3,15 @@
 
 
 {% block myform %}
-        <div class="container-fluid col-md-7">
-            <h1>Delete account</h1></br>
-            <p>{{ request.user.username }}, are you sure? </br>This is irreversible!</p></br></br>
-            <form action="" method="post">
-                {% csrf_token %}
-                <p>I am double checkin again.</p>
-                {{ form | crispy }}
-                <a href="{% url 'view_photos' %}" class="btn btn-info myButton ">No, I don't wanna delete</a>
-                <input type="submit" value="Yes, I wanna delete" class="btn btn-info myButton"/> </input>
-            </form>
-        </div>
+    <div class="container-fluid col-md-5">
+        <h1>Delete account</h1></br>
+        <p>{{ request.user.username }}, are you sure? </br>This is irreversible!</p></br></br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Think again...</p>
+            {{ form | crispy }}
+            <a href="{% url 'view_photos' %}" class="btn btn-light myButton">No, I don't wanna delete</a>
+            <input type="submit" value="Yes, I wanna delete" class="btn btn-light myButton"/> </input>
+        </form>
+    </div>
 {% endblock %}

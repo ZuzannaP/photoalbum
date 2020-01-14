@@ -3,22 +3,25 @@
 
 {% block title %} Settings {% endblock %}
 
-
 {% block content %}
-        <div class="d-flex">
 
-    {% block myform %} {% endblock %}
+    <div class="d-flex">
+        <div class="container-fluid col-md-2"></div>
 
-    <div class="list-group list-group-flush container-fluid col-md-5" id="right-navbar">
-        <li class="list-group-item  ">---- NAVIGATION ----</li>
-        <a href="{% url 'view_photos' %}"
-           class="list-group-item list-group-item-dark list-group-item-action ">Homepage</a>
-        <a href="{% url 'edit_personal_info' %}"
-           class="list-group-item list-group-item-dark list-group-item-action ">Edit personal info</a>
-        <a href="{% url 'password_change' %}"
-           class="list-group-item list-group-item-dark list-group-item-action ">Change password</a>
-        <a href="{% url 'delete_account' %}"
-           class="list-group-item list-group-item-dark list-group-item-action">Delete your account</a>
-    </div>
+        {% block myform %} {% endblock %}
+
+        <div class="list-group list-group-flush container-fluid col-md-3" id="right-navbar">
+            <li class="list-group-item  ">---- NAVIGATION ----</li>
+            <a href="{% url 'view_photos' %}"
+               class="list-group-item list-group-item-dark list-group-item-action ">Homepage</a>
+            <a href="{% url 'edit_personal_info' %}"
+               class="list-group-item list-group-item-dark list-group-item-action ">Edit personal info</a>
+            <a href="{% url 'password_change' %}"
+               class="list-group-item list-group-item-dark list-group-item-action ">Change password</a>
+            <a href="{% url 'delete_account' %}"
+               class="list-group-item list-group-item-dark list-group-item-action">Delete your account</a>
         </div>
+        <div class="container-fluid col-md-2"></div>
+    </div>
+
 {% endblock %}

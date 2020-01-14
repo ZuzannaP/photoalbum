@@ -1,46 +1,50 @@
 {% extends "base.html" %}
+
 {% load crispy_forms_tags %}
 
 {% block title %} Photo {% endblock %}
 
 {% block content %}
 
-        <div class="container-fluid col-md-6">
-<h1>Details about the photo</h1>
-        <p><img src="{{ photo.path.url }}" height="500"></p>
-          {% if request.user == photo.owner %}
-            <a href="{% url "delete_photo" photo.pk %}">Delete photo</a>
-        {% endif %}
-        <p>Author: {{ photo.owner.username }}</p>
-        <p>Upload date: {{ photo.creation_date }}</p>
-        <p>Description: {{ photo.description }}</p>
-        {% if request.user == photo.owner %}
-            <a href="{% url "edit_photo" photo.pk %}">Edit description</a>
-        {% endif %}
-        <p>Likes: ({{ photo.likes.count }})</p>
-        <p>{% if user in photo.likes.all %}
-            <a href="{% url 'unlike' pk=photo.id %}">Unlike it</a>
+    <div class="d-flex">
+        <div class="container-fluid col-md-2"></div>
+        <div class="container-fluid col-md-5">
+            <h2>Photo by: {{ photo.owner.username }}</h2>
+            <p class="photo-description">"{{ photo.description }}"</p>
+            <p><img src="{{ photo.path.url }}" class="img-fluid rounded" alt="user's_photo"></p>
+            <p>Uploaded: {{ photo.creation_date }}</p>
+        </div>
+        <div class="list-group list-group-flush container-fluid col-md-3" id="right-navbar">
+            <li class="list-group-item  ">LIKES: ({{ photo.likes.count }})</li>
+            {% if user in photo.likes.all %}
+                <a href="{% url 'unlike' pk=photo.id %}"
+                   class="list-group-item list-group-item-dark list-group-item-action ">Unlike it</a>
             {% else %}
-            <a href="{% url 'like' pk=photo.id %}">Like it</a>
-            {% endif %} </p>
-            <p><b>COMMENTS</b> ({{ photo.comment_set.count }}): {% for comment in photo.comment_set.all %}
-                <p>{{ comment.creation_date }}  <b>{{ comment.author }}</b>: {{ comment }}</p>
-            {% empty %} </br>
-                No comments. You can be first!
+                <a href="{% url 'like' pk=photo.id %}"
+                   class="list-group-item list-group-item-dark list-group-item-action">Like it</a>
+            {% endif %}
+            {% if request.user == photo.owner %}
+                <a href="{% url "edit_photo" photo.pk %}"
+                   class="list-group-item list-group-item-dark list-group-item-action ">Edit description</a>
+                <a href="{% url "delete_photo" photo.pk %}"
+                   class="list-group-item list-group-item-dark list-group-item-action ">Delete photo</a>
+            {% endif %}
+             </br>
+            <li class="list-group-item  ">COMMENTS: ({{ photo.comment_set.count }})</li>
+            {% for comment in photo.comment_set.all %}
+                <p class="list-group-item list-group-item-dark list-group-item-action ">{{ comment.creation_date }}
+                    <b>{{ comment.author }}</b>: {{ comment }}</p>
+            {% empty %}
+                <p class="list-group-item list-group-item-dark list-group-item-action ">No comments. You can be
+                    first!</p>
             {% endfor %}
-            </p>
-
-
-<div class="container-fluid col-md-8">
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <input type="submit" class="btn btn-dark addButton" value="Send">
-    </form>
-</div>
-
-
-
-</div>
+            <form action="" method="post" class="list-group-item list-group-item-dark list-group-item-action">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" class="btn btn-light myButton" value="Send">
+            </form>
+        </div>
+        <div class="container-fluid col-md-2"></div>
+    </div>
 
 {% endblock %}

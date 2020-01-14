@@ -56,22 +56,23 @@ a.nav-item.nav-link{
 }
 
 #sidebar-wrapper > div > li, body > div > div.list-group.list-group-flush > li{
-    background-color: darkgrey;
+    background-color: dimgrey;
     color: white;
+    font-size: large;
 }
 
-
-#sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > a{
-    background-color:  lightgrey;
+#sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > a,
+#sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > p,
+#sidebar-wrapper > div > a, body > div > div.list-group.list-group-flush > form{
+    background-color: #e3e3e3;
     color: #4F4350;
 }
-
 
 /*BODY*/
 
 h1 {
     color: #5d5d5d;
-    font-size: x-large;
+    font-size: large;
     padding: 10px 0 40px 0;
     margin: 0;
     font-weight: bold;
@@ -101,5 +102,18 @@ body{
 .myButton:hover{
     background-color: #383838;
     color: white;
+}
+
+.photo-description{
+    color: #383838;
+    font-style: italic;
+    font-size: large;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.signature{
+    text-align: left;
+    margin: 0;
 }
 

@@ -1,22 +1,28 @@
 {% extends "base.html" %}
+
 {% load crispy_forms_tags %}
 
-{% block title %} Photo {% endblock %}
-{%  load crispy_forms_tags %}
+{% block title %} Edit {% endblock %}
 
 {% block content %}
 
-    <div class="container-fluid col-md-6">
-        <h1>Edit description</h1>
-        <p><img src="{{ photo.path.url }}" height="500"></p>
-        <p>Upload date: {{ photo.creation_date }}</p>
-        <p>Current description: {{ photo.description }}</p>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form | crispy }}
-            <input type="submit" class="btn btn-dark addButton" value="Send">
-        </form>
-    </div>
-
+    <div class="d-flex">
+        <div class="container-fluid col-md-2"></div>
+        <div class="container-fluid col-md-5">
+            <h1>Edit description</h1>
+            <p><img src="{{ photo.path.url }}" class="img-fluid rounded"></p>
+            <p>Upload date: {{ photo.creation_date }}</p>
+        </div>
+        <div class="list-group list-group-flush container-fluid col-md-3" id="right-navbar">
+            <li class="list-group-item  ">DESCRIPTION</li>
+            <p class="list-group-item list-group-item-dark list-group-item-action ">Current
+                description: {{ photo.description }}
+            <form action="" method="post" class="list-group-item list-group-item-dark list-group-item-action">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" class="btn btn-light myButton" value="Send">
+            </form>
+        </div>
+    <div class="container-fluid col-md-2"></div>
 
 {% endblock %}

@@ -105,7 +105,7 @@ class AddPhoto(LoginRequiredMixin, View):
             description = form.cleaned_data["description"]
             photo = Photo.objects.create(path=path, owner=request.user, description=description)
             messages.success(request, 'Photo successfully uploaded')
-            return redirect("view_photos")
+            return redirect(f"/photo/{photo.pk}/")
         ctx = {"form": form}
         return render(request, "add_photo_tmp.html", ctx)
 
@@ -127,33 +127,11 @@ class EditPhoto(LoginRequiredMixin, SuccessMessageMixin, View):
             new_description = form.cleaned_data["description"]
             photo.description = new_description
             photo.save()
-            messages.success(request, 'Photo successfully uploaded')
+            messages.success(request, 'Description changed')
             return redirect(f"/photo/{photo_id}")
         ctx = {"form": form}
         return render(request, "edit_photo_tmp.html", ctx)
 
-
-# class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, View):
-#     def get(self, request, photo_id):
-#         photo = Photo.objects.get(pk=photo_id)
-#         if photo.owner != request.user:
-#             raise PermissionDenied
-#         else:
-#             form = DeletePhotoForm()
-#             ctx = {"form": form, "photo": photo}
-#             return render(request, "edit_photo_tmp.html", ctx)
-#
-#     def post(self, request, photo_id):
-#         form = EditPhotoForm(request.POST)
-#         photo = Photo.objects.get(pk=photo_id)
-#         if form.is_valid():
-#             new_description = form.cleaned_data["description"]
-#             photo.description = new_description
-#             photo.save()
-#             messages.success(request, 'Photo successfully uploaded')
-#             return redirect(f"/photo/{photo_id}")
-#         ctx = {"form": form}
-#         return render(request, "edit_photo_tmp.html", ctx)
 
 class DeletePhoto(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Photo
