@@ -187,7 +187,7 @@ class OnePhoto(LoginRequiredMixin, View):
     def post(self, request, photo_id):
         form = CommentCreationForm(request.POST)
         photo = Photo.objects.get(pk=photo_id)
-        if form.is_valid():
+        if form.is_valid ():
             content = form.cleaned_data["content"]
             comment = Comment.objects.create(content=content, photo=photo, author=request.user)
             messages.success(request, 'Your comment has been saved!')

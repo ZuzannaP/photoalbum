@@ -40,11 +40,16 @@
             {% endfor %}
             <form action="" method="post" class="list-group-item list-group-item-dark list-group-item-action">
                 {% csrf_token %}
-                {{ form | crispy }}
-                <input type="submit" class="btn btn-light myButton" value="Send">
+                {{ form | crispy }
+    ###########stąd id usuń ##########
+                <input id="submitBtn" type="submit" class="btn btn-light myButton" value="Send">
             </form>
         </div>
         <div class="container-fluid col-md-2"></div>
     </div>
 
+
 {% endblock %}
+
+########### i to usuń ################
+<script src="/album_photo/static/js/app.js" type="text/javascript"></script>

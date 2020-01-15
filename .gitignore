@@ -1,6 +1,8 @@
 # baza danych
 local_settings.py
 
+#sh
+start.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
