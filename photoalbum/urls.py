@@ -22,7 +22,7 @@ from album_photo.views import AddPhoto, EditPhoto, DeletePhoto, ViewPhotos, Like
 from photoalbum.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('manager/', admin.site.urls),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path('create_account/', SignUpView.as_view(), name='signup'),
