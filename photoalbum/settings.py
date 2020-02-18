@@ -21,7 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm)*a6zydq09#mu#n-0rm*s*6eyq^fl74^cuxudpie%)q374cw3'
+
+
+try:
+    from photoalbum.local_settings import SECRET_KEY # noqa
+except ModuleNotFoundError:
+    print("Brak konfiguracji bazy danych w pliku local_settings.py!")
+    print("Uzupełnij dane i spróbuj ponownie!")
+    exit(0)
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,7 +87,7 @@ WSGI_APPLICATION = 'photoalbum.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 try:
-    from photoalbum.local_settings import DATABASES
+    from photoalbum.local_settings import DATABASES # noqa
 except ModuleNotFoundError:
     print("Brak konfiguracji bazy danych w pliku local_settings.py!")
     print("Uzupełnij dane i spróbuj ponownie!")
