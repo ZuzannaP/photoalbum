@@ -26,8 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 try:
     from photoalbum.local_settings import SECRET_KEY # noqa
 except ModuleNotFoundError:
-    print("Brak konfiguracji bazy danych w pliku local_settings.py!")
-    print("Uzupełnij dane i spróbuj ponownie!")
+    print("Database not configured in file local_settings.py!")
+    print("Fill out this data and try again!")
     exit(0)
 
 
@@ -89,8 +89,8 @@ WSGI_APPLICATION = 'photoalbum.wsgi.application'
 try:
     from photoalbum.local_settings import DATABASES # noqa
 except ModuleNotFoundError:
-    print("Brak konfiguracji bazy danych w pliku local_settings.py!")
-    print("Uzupełnij dane i spróbuj ponownie!")
+    print("Database not configured in file local_settings.py!")
+    print("Fill out this data and try again!")
     exit(0)
 
 # Password validation
