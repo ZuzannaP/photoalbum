@@ -1,6 +1,11 @@
 # baza danych
 local_settings.py
 
+# media
+album_photo/media/
+
+
+
 #sh
 start.sh
 
