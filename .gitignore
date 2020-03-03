@@ -2,7 +2,7 @@
 local_settings.py
 
 # media
-album_photo/media/
+/album_photo/media/
 
 
 
@@ -140,3 +140,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
