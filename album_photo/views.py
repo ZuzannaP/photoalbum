@@ -16,7 +16,7 @@ from album_photo.forms import AddPhotoForm, EditPhotoForm,  LoginForm, CustomUse
 from album_photo.models import Photo, Comment
 
 
-# user functionality
+# USER functionality
 
 class LoginView(FormView):
     form_class = LoginForm
@@ -43,10 +43,12 @@ class LogoutView(View):
     def post(self, request):
         ctx = {}
         logout(request)
+
         if request.user.is_authenticated:
             ctx["my_verdict"] = "Ups. Something went wrong."
         else:
             ctx["my_verdict"] = "You have been logged out"
+
         return render(request, "logout.html", ctx)
 
 
@@ -89,10 +91,9 @@ class CustomPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'password_change_done.html'
 
 
-# photos functionality
+# PHOTOS functionality
 
 class AddPhoto(LoginRequiredMixin, View):
-
     def get(self, request):
         form = AddPhotoForm()
         ctx = {"form": form}
@@ -100,12 +101,14 @@ class AddPhoto(LoginRequiredMixin, View):
 
     def post(self, request):
         form = AddPhotoForm(request.POST, request.FILES)
+
         if form.is_valid():
             path = form.cleaned_data["path"]
             description = form.cleaned_data["description"]
             photo = Photo.objects.create(path=path, owner=request.user, description=description)
             messages.success(request, 'Photo successfully uploaded')
             return redirect(f"/photo/{photo.pk}/")
+
         ctx = {"form": form}
         return render(request, "add_photo_tmp.html", ctx)
 
@@ -113,6 +116,7 @@ class AddPhoto(LoginRequiredMixin, View):
 class EditPhoto(LoginRequiredMixin, SuccessMessageMixin, View):
     def get(self, request, photo_id):
         photo = Photo.objects.get(pk=photo_id)
+
         if photo.owner != request.user:
             raise PermissionDenied
         else:
@@ -123,12 +127,14 @@ class EditPhoto(LoginRequiredMixin, SuccessMessageMixin, View):
     def post(self, request, photo_id):
         form = EditPhotoForm(request.POST)
         photo = Photo.objects.get(pk=photo_id)
+
         if form.is_valid():
             new_description = form.cleaned_data["description"]
             photo.description = new_description
             photo.save()
             messages.success(request, 'Description changed')
             return redirect(f"/photo/{photo_id}")
+
         ctx = {"form": form}
         return render(request, "edit_photo_tmp.html", ctx)
 
@@ -168,15 +174,14 @@ class ViewPhotos(ListView):
 
 
 class MyPhotos(LoginRequiredMixin, View):
-
     def get(self, request):
         photos = Photo.objects.filter(owner=request.user).order_by("-creation_date")
         ctx = {"photos": photos}
         return render(request, "my_photos_tmp.html", ctx)
 
 
-# this view displays photo details and a form to add comments
 class OnePhoto(LoginRequiredMixin, View):
+    """this view displays photo details and a form to add comments"""
 
     def get(self, request, photo_id):
         form = CommentCreationForm()
@@ -187,14 +192,12 @@ class OnePhoto(LoginRequiredMixin, View):
     def post(self, request, photo_id):
         form = CommentCreationForm(request.POST)
         photo = Photo.objects.get(pk=photo_id)
-        if form.is_valid ():
+
+        if form.is_valid():
             content = form.cleaned_data["content"]
-            comment = Comment.objects.create(content=content, photo=photo, author=request.user)
+            Comment.objects.create(content=content, photo=photo, author=request.user)
             messages.success(request, 'Your comment has been saved!')
             return redirect(f'/photo/{photo_id}/')
+
         ctx = {"form": form}
         return render(request, "view_photos_tmp.html", ctx)
-
-
-
-

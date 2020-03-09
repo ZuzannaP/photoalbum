@@ -9,14 +9,15 @@
         <div class="row">
             {% for photo in photos %}
                 <ul class="col-md-4 col-sd-12">
-                    <a href="{% url 'one_photo' photo.pk %}"><img src="{{ photo.path.url }}" class="img-fluid rounded"
-                                                                  alt="images"></a>
-                    <p class="signature">Likes: ({{ photo.likes.count }})</p>
-                    <p class="signature"> {% if photo.comment_set.count == 0 %}
+                    <li><a href="{% url 'one_photo' photo.pk %}"><img src="{{ photo.path.url }}"
+                                                                      class="img-fluid rounded"
+                                                                      alt="images"> </a></li>
+                    <li class="signature">Likes: ({{ photo.likes.count }})</li>
+                    <li class="signature"> {% if photo.comment_set.count == 0 %}
                         Comments: (0)
                     {% else %}
                         <a href="{% url 'one_photo' photo.pk %}">Comments: ({{ photo.comment_set.count }})</a>
-                    {% endif %}</p>
+                    {% endif %}</li>
                 </ul>
                 {% if forloop.counter|divisibleby:3 %}
                     </div><!-- closing one div, opening a new one-->

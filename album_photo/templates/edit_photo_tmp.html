@@ -10,11 +10,11 @@
         <div class="container-fluid col-md-2"></div>
         <div class="container-fluid col-md-5">
             <h1>Edit description</h1>
-            <p><img src="{{ photo.path.url }}" class="img-fluid rounded"></p>
+            <p><img src="{{ photo.path.url }}" class="img-fluid rounded" alt="users_photo"></p>
             <p>Upload date: {{ photo.creation_date }}</p>
         </div>
         <div class="list-group list-group-flush container-fluid col-md-3" id="right-navbar">
-            <li class="list-group-item  ">DESCRIPTION</li>
+            <p class="list-group-item  ">DESCRIPTION</p>
             <p class="list-group-item list-group-item-dark list-group-item-action ">Current
                 description: {{ photo.description }}
             <form action="" method="post" class="list-group-item list-group-item-dark list-group-item-action">

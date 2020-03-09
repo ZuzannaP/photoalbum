@@ -1,4 +1,4 @@
-/*NAVBAR TOP*/
+/* NAVBAR TOP */
 
 .navbar{
     background-color: darkgrey !important;
@@ -29,7 +29,8 @@
     text-align: right;
 }
 
-/* Menu */
+/* MENU */
+
 a.nav-item.nav-link{
     margin-right: 15px;
 }
@@ -117,3 +118,6 @@ body{
     margin: 0;
 }
 
+ul {
+  list-style-type: none
+}

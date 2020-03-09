@@ -1,6 +1,9 @@
+import os
+import shutil
+
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.test import Client
 from django.urls import reverse
 
@@ -8,10 +11,15 @@ from album_photo.forms import AddPhotoForm, CustomUserChangeForm, CommentCreatio
 from album_photo.models import Photo, Comment
 
 
+TEST_DIR = 'test_data'
+my_media_root = os.path.join(TEST_DIR, 'media')
+
+
 class ModelTestClass(TestCase):
     @classmethod
+    @override_settings(MEDIA_ROOT=my_media_root)
     def setUpTestData(cls):
-        with open("photoalbum/test_data/test_image.jpeg", "rb") as test_photo:
+        with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
             img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
 
         cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@wp.pl")
@@ -27,11 +35,19 @@ class ModelTestClass(TestCase):
         self.assertTrue(isinstance(self.c, Comment))
         self.assertEqual(self.c.__str__(), self.c.content)
 
+    @classmethod
+    def tearDown(cls):
+        try:
+            shutil.rmtree(TEST_DIR)
+        except OSError:
+            pass
+
 
 class FormsTestClass(TestCase):
     @classmethod
+    @override_settings(MEDIA_ROOT=my_media_root)
     def setUpTestData(cls):
-        with open("photoalbum/test_data/test_image.jpeg", "rb") as test_photo:
+        with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
             img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
 
         cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@wp.pl")
@@ -54,7 +70,7 @@ class FormsTestClass(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_valid_add_photo_form(self):
-        with open("photoalbum/test_data/test_image.jpeg", "rb") as test_photo:
+        with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
             img = SimpleUploadedFile('image2.jpg', content=test_photo.read(), content_type='image/jpeg')
         file_data = {"path": img}
         data = {"description": "This is description of another image"}
@@ -92,3 +108,9 @@ class FormsTestClass(TestCase):
         form = CommentCreationForm(data=data)
         self.assertFalse(form.is_valid())
 
+    @classmethod
+    def tearDown(cls):
+        try:
+            shutil.rmtree(TEST_DIR)
+        except OSError:
+            pass

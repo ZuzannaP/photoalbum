@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
 
 
 class CustomUserChangeForm(UserChangeForm):
-    # UserChangeForm wywołuje hasło, dlatego trzeba to nadpisać ustawiając "None"
+    # UserChangeForm automatically generates password change, so it has to be overwritten by "None"
     password = None
 
     class Meta:
@@ -29,7 +29,7 @@ class CommentCreationForm(forms.ModelForm):
         model = Comment
         fields = ["content"]
         labels = {
-            "content": ("Add comment:"),
+            "content": "Add comment:",
         }
 
 
@@ -38,7 +38,5 @@ class EditPhotoForm(forms.ModelForm):
         model = Photo
         fields = ["description"]
         labels = {
-            "description": ("New description:"),
+            "description": "New description:",
         }
-
-

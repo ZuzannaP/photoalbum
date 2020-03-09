@@ -26,8 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 try:
     from photoalbum.local_settings import SECRET_KEY # noqa
 except ModuleNotFoundError:
-    print("Database not configured in file local_settings.py!")
-    print("Fill out this data and try again!")
+    print("Secret key not configured in file local_settings.py! \n Fill out this data and try again!")
     exit(0)
 
 
@@ -89,8 +88,7 @@ WSGI_APPLICATION = 'photoalbum.wsgi.application'
 try:
     from photoalbum.local_settings import DATABASES # noqa
 except ModuleNotFoundError:
-    print("Database not configured in file local_settings.py!")
-    print("Fill out this data and try again!")
+    print("Database not configured in file local_settings.py! \n Fill out this data and try again!")
     exit(0)
 
 # Password validation
@@ -131,7 +129,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# dodałam to
 MEDIA_ROOT = 'album_photo/media/'
 MEDIA_URL = '/media/'
 
@@ -139,7 +136,7 @@ LOGIN_URL = 'login/'
 LOGOUT_URL = 'logout/'
 
 
-#jest to dodane, by messages działały z Bootstrapem
+# added for Django messages to be compatible with Bootstrap4
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',

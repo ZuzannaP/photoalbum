@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from album_photo.views import AddPhoto, EditPhoto, DeletePhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, LoginView, LogoutView, \
-    EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, CustomPasswordChangeDoneView, \
-    account_settings, OnePhoto
+from album_photo.views import AddPhoto, EditPhoto, DeletePhoto, ViewPhotos, LikePhoto, UnlikePhoto, MyPhotos, \
+    LoginView, LogoutView, EditPersonalInfoView, SignUpView, DeleteAccountView, CustomPasswordChangeView, \
+    CustomPasswordChangeDoneView, account_settings, OnePhoto
 from photoalbum.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
@@ -39,4 +39,4 @@ urlpatterns = [
     path("", ViewPhotos.as_view(), name="view_photos"),
     path("photos/my_photos/", MyPhotos.as_view(), name="my_photos"),
     path("photo/<int:photo_id>/", OnePhoto.as_view(), name="one_photo"),
-]+ static(MEDIA_URL, document_root=MEDIA_ROOT)
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)

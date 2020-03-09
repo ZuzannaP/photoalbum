@@ -6,9 +6,9 @@
 
     {% if not request.user.is_authenticated %}
         <div class="container col-md-6">
-            </br></br><h1><i><b>Photo album</b></i> is an Instagram copy. </h1>
+            <br><br><h1><i><b>Photo album</b></i> is an Instagram copy. </h1>
             <p>Wanna use Insta, but are ashamed of the low amount of followers? Use Photo album! Here you can easly have
-                the most followers of all! </br>
+                the most followers of all! <br>
         </div>
     {% else %}
         <div class="container-fluid col-md-8">
@@ -16,22 +16,23 @@
             <div class="row">
                 {% for photo in photos %}
                     <ul class="col-md-4 col-sd-12">
-                        <a href="{% url 'one_photo' photo.pk %}"><img src="{{ photo.path.url }}"
-                                                                         class="img-fluid rounded" alt="pictures"></a>
-                        <p class="signature">by {{ photo.owner.username }} </p>
-                         <p class="signature">   {% if photo.comment_set.count == 0 %}
+                        <li><a href="{% url 'one_photo' photo.pk %}">
+                            <img src="{{ photo.path.url }}" class="img-fluid rounded" alt="pictures">
+                        </a></li>
+                        <li class="signature">by {{ photo.owner.username }} </li>
+                         <li class="signature">   {% if photo.comment_set.count == 0 %}
                                 Comments: (0)
                             {% else %}
                                 <a href="{% url 'one_photo' photo.pk %}">Comments: ({{ photo.comment_set.count }})</a>
                             {% endif %}
-                        </p>
-                        <p class="signature">  Likes: ({{ photo.likes.count }})
+                        </li>
+                        <li class="signature">  Likes: ({{ photo.likes.count }})
                             {% if user in photo.likes.all %}
                             <a href="{% url 'unlike' pk=photo.id %}" class="btn  btn-secondary btn-sm">Unlike it</a>
                         {% else %}
                             <a href="{% url 'like' pk=photo.id %}" class="btn btn-secondary btn-sm ">Like it</a>
                         {% endif %}
-                        </p>
+                        </li>
                     </ul>
                     {% if forloop.counter|divisibleby:3 %}
                         </div><!-- closing one div, opening a new one-->

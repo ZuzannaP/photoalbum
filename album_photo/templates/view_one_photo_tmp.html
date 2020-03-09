@@ -29,7 +29,7 @@
                 <a href="{% url "delete_photo" photo.pk %}"
                    class="list-group-item list-group-item-dark list-group-item-action ">Delete photo</a>
             {% endif %}
-             </br>
+             <br>
             <li class="list-group-item  ">COMMENTS: ({{ photo.comment_set.count }})</li>
             {% for comment in photo.comment_set.all %}
                 <p class="list-group-item list-group-item-dark list-group-item-action ">{{ comment.creation_date }}

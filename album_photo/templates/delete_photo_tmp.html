@@ -6,8 +6,8 @@
 {% block content %}
 
     <div class="container-fluid col-md-7">
-        <h1>Delete photo</h1></br>
-        <p>Do you confirm deletion?</p></br></br>
+        <h1>Delete photo</h1><br>
+        <p>Do you confirm deletion?</p><br><br>
         <form action="" method="post">
             {% csrf_token %}
             {{ form | crispy }}
