@@ -1,14 +1,16 @@
 # photoalbum_app
 Image sharing platform that provides easy way to display photos, comment on them and like them. If you are overwhelmed by Instagram - this app is for you :)
 
-## How does it work?
+## How does it look like
 
+Detailed photo view
 
 <p align="center">
 <img align="center" src="album_photo/static/img/screenshot1.png" alt="one photo screen"
 	title="photoalbum_app one photo screen" width="750"/>
 </p>
 
+All photos view
 
 <p align="center">
 <img src="album_photo/static/img/screenshot2.png" alt="photos display"
