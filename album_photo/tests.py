@@ -114,3 +114,114 @@ class FormsTestClass(TestCase):
             shutil.rmtree(TEST_DIR)
         except OSError:
             pass
+
+
+class ViewsUserTestClass(TestCase):
+    def setUp(self):
+        self.test_user = User.objects.create_user(username="TestUser", password="testusertestuser",
+                                                  email="testuser@wp.pl")
+
+    def test_login(self):
+        c = Client()
+        response = c.login(username="TestUser", password="testusertestuser")
+        self.assertTrue(response)
+
+    def test_access_for_logged_in(self):
+        c = Client()
+        c.login(username="TestUser", password="testusertestuser")
+        response = c.get(reverse("view_photos"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_restrictions_for_logged_out(self):
+        """ logged-out user can not access urls restricted for logged-in users """
+        c = Client()
+        c.logout()
+        response = c.get(reverse("add_photo"))
+        self.assertRedirects(response, "/login/?next=/photo/add/")
+
+    def test_signup_view_uses_correct_template_and_has_desired_location(self):
+        c = Client()
+        response = c.get(reverse('signup'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_EditPersonalInfoView_uses_correct_template_and_has_desired_location(self):
+        self.c = Client()
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('edit_personal_info'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account_edit_personal_info.html')
+
+    def test_DeleteAccountView_uses_correct_template_and_has_desired_location(self):
+        self.c = Client()
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('delete_account'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account_confirm_delete.html')
+
+    def test_CustomPasswordChangeView_uses_correct_template_and_has_desired_location(self):
+        self.c = Client()
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('password_change'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'password_change.html')
+
+
+class ViewsAppLogicTestClass(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
+            img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
+
+        cls.test_user = User.objects.create_user(username="TestUser", password="testusertestuser",
+                                                 email="testuser@wp.pl")
+        cls.test_user2 = User.objects.create_user(username="TestUser2", password="testuser2testuser2",
+                                                  email="testuser2@wp.pl")
+        cls.p = Photo.objects.create(path=img, description="This is description of test image", owner=cls.test_user)
+        cls.c = Client()
+
+    def test_AddPhoto_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('add_photo'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'add_photo_tmp.html')
+
+    def test_EditPhoto_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('edit_photo', args=(self.p.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'edit_photo_tmp.html')
+
+    def test_DeletePhoto_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('delete_photo', args=(self.p.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'delete_photo_tmp.html')
+
+    def test_LikePhoto_uses_correct_template_and_redirects_correctly(self):
+        self.c.login(username="TestUser2", password="testuser2testuser2")
+        response = self.c.get(reverse('like', args=(self.p.pk,)))
+        self.assertEqual(response.status_code, 302)
+
+    def test_UnlikePhoto_uses_correct_template_and_redirects_correctly(self):
+        self.c.login(username="TestUser2", password="testuser2testuser2")
+        response = self.c.get(reverse('unlike', args=(self.p.pk,)))
+        self.assertEqual(response.status_code, 302)
+
+    def test_ViewPhotos_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('view_photos'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'view_photos_tmp.html')
+
+    def test_MyPhotos_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('my_photos'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'my_photos_tmp.html')
+
+    def test_OnePhoto_uses_correct_template_and_has_desired_location(self):
+        self.c.login(username="TestUser", password="testusertestuser")
+        response = self.c.get(reverse('one_photo', args=(self.p.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'view_one_photo_tmp.html')

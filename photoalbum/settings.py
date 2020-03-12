@@ -132,8 +132,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = 'album_photo/media/'
 MEDIA_URL = '/media/'
 
-LOGIN_URL = 'login/'
-LOGOUT_URL = 'logout/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 
 
 # added for Django messages to be compatible with Bootstrap4
