@@ -22,8 +22,8 @@ class ModelTestClass(TestCase):
         with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
             img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
 
-        cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@wp.pl")
-        cls.r = User.objects.create_user(username="TestUser2", password="testuser2testuser2", email="testuser2@wp.pl")
+        cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@example.com")
+        cls.r = User.objects.create_user(username="TestUser2", password="testuser2testuser2", email="testuser2@example.com")
         cls.p = Photo.objects.create(path=img, description="This is description of test image", owner=cls.u)
         cls.c = Comment.objects.create(content="This is a test comment.", photo=cls.p, author=cls.r)
 
@@ -50,14 +50,14 @@ class FormsTestClass(TestCase):
         with open("photoalbum/tests_data/test_image.jpeg", "rb") as test_photo:
             img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
 
-        cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@wp.pl")
-        cls.r = User.objects.create_user(username="TestUser2", password="testuser2testuser2", email="testuser2@wp.pl")
+        cls.u = User.objects.create_user(username="TestUser", password="testusertestuser", email="testuser@example.com")
+        cls.r = User.objects.create_user(username="TestUser2", password="testuser2testuser2", email="testuser2@example.com")
         cls.p = Photo.objects.create(path=img, description="This is description of test image", owner=cls.u)
         cls.c = Comment.objects.create(content="This is a test comment.", photo=cls.p, author=cls.r)
 
     def test_valid_custom_user_change_form(self):
         self.u = User.objects.get(username="TestUser")
-        data = {"first_name": "New", "last_name": "TestUser", 'email': "testuser@wp.pl"}
+        data = {"first_name": "New", "last_name": "TestUser", 'email': "testuser@example.com"}
         form = CustomUserChangeForm(instance=self.u, data=data)
         self.assertTrue(form.is_valid())
 
@@ -119,7 +119,7 @@ class FormsTestClass(TestCase):
 class ViewsUserTestClass(TestCase):
     def setUp(self):
         self.test_user = User.objects.create_user(username="TestUser", password="testusertestuser",
-                                                  email="testuser@wp.pl")
+                                                  email="testuser@example.com")
 
     def test_login(self):
         c = Client()
@@ -174,9 +174,9 @@ class ViewsAppLogicTestClass(TestCase):
             img = SimpleUploadedFile('image.jpg', content=test_photo.read(), content_type='image/jpeg')
 
         cls.test_user = User.objects.create_user(username="TestUser", password="testusertestuser",
-                                                 email="testuser@wp.pl")
+                                                 email="testuser@example.com")
         cls.test_user2 = User.objects.create_user(username="TestUser2", password="testuser2testuser2",
-                                                  email="testuser2@wp.pl")
+                                                  email="testuser2@example.com")
         cls.p = Photo.objects.create(path=img, description="This is description of test image", owner=cls.test_user)
         cls.c = Client()
 
