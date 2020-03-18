@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
+import logging
+
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -20,13 +23,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
+
+logger = logging.getLogger(__name__)
+
+# SECURITY WARNING: keep the secret key used in production secret!
 
 try:
     from photoalbum.local_settings import SECRET_KEY # noqa
 except ModuleNotFoundError:
-    print("Secret key not configured in file local_settings.py! \n Fill out this data and try again!")
+    logger.warning("Secret key not configured in file local_settings.py! \n Fill out this data and try again!")
     exit(0)
 
 
@@ -88,7 +107,7 @@ WSGI_APPLICATION = 'photoalbum.wsgi.application'
 try:
     from photoalbum.local_settings import DATABASES # noqa
 except ModuleNotFoundError:
-    print("Database not configured in file local_settings.py! \n Fill out this data and try again!")
+    logger.warning("Database not configured in file local_settings.py! \n Fill out this data and try again!")
     exit(0)
 
 # Password validation
